@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-store";
 
 import { EffectsModule } from '@ngrx/effects';
+import * as fromAppStateRoot from './reducers';
 
 
 const routes: Routes = [
@@ -50,6 +51,7 @@ const routes: Routes = [
         MatListModule,
         MatToolbarModule,
         AuthModule.forRoot(),
+        StoreModule.forFeature('appStateRoot', fromAppStateRoot.reducers, { metaReducers: fromAppStateRoot.metaReducers }),
     ],
     providers: [],
     bootstrap: [AppComponent]
