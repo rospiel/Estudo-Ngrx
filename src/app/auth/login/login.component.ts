@@ -37,7 +37,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.store.dispatch(new Login());
+    const usuario = this.form.value;
+    this.auth.login(usuario.email, usuario.password)
+    .pipe(
+      tap(user => {
+        this.store.dispatch(new Login({user}));
+        this.router.navigateByUrl('/courses');
+      })
+    )
+    .subscribe(
+      noop,
+      () => alert('Login Falhou')
+    );
   }
 
 
