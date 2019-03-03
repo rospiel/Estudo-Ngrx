@@ -6,13 +6,39 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+import { User } from '../model/user.model';
+import { AuthActionTypes } from '../auth/auth.actions';
+
+/* Criação dos objetos a serem mantidos */
+type AuthState = {
+  loggedIn: boolean,
+  user: User
+}
+/* Fim Criação dos objetos */
 
 export interface AppState {
-
+  /* Criação dos objetos a serem mantidos */
+  auth: AuthState
+  /* Fim Criação dos objetos */
 }
 
-export const reducers: ActionReducerMap<AppState> = {
+function authReducer(state: AuthState, action): AuthState {
+  switch (action.type) {
 
+    case AuthActionTypes.LoginAction:
+      return {
+        loggedIn: true,
+        user: action.payload.user
+      }
+
+    default:
+      return state;  
+  }
+}
+
+/* Ações que faram alterações em store */
+export const reducers: ActionReducerMap<AppState> = {
+  auth: authReducer /* Para este objeto faça uso desta função */
 };
 
 

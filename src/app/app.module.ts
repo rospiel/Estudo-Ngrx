@@ -50,9 +50,10 @@ const routes: Routes = [
         MatSidenavModule,
         MatListModule,
         MatToolbarModule,
+        StoreModule.forRoot({}),
         AuthModule.forRoot(),
         StoreModule.forFeature('appStateRoot', fromAppStateRoot.reducers, { metaReducers: fromAppStateRoot.metaReducers }),
-        StoreModule.forRoot({}),
+        !environment.production ? StoreDevtoolsModule.instrument() : []
     ],
     providers: [],
     bootstrap: [AppComponent]
