@@ -22,6 +22,7 @@ import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-s
 import { EffectsModule } from '@ngrx/effects';
 import * as fromAppStateRoot from './reducers';
 import { AuthGuard } from './auth/auth.guard';
+import { CustomSerializer } from './shared/utils';
 
 
 const routes: Routes = [
@@ -55,9 +56,14 @@ const routes: Routes = [
         AuthModule.forRoot(),
         StoreModule.forFeature('appStateRoot', fromAppStateRoot.reducers, { metaReducers: fromAppStateRoot.metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([]),
+        StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+        RouterModule.forRoot([]),
+        StoreRouterConnectingModule.forRoot({
+            serializer: CustomSerializer,
+        }),
     ],
-    providers: [],
+    providers: [ { provide: RouterStateSerializer, useClass: CustomSerializer } ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
