@@ -5,12 +5,16 @@ import { createEntityAdapter } from "@ngrx/entity";
 import { CourseActionTypes, CourseActions } from "./course.actions";
 
 /* Objeto a ser mantido na store */
-export interface CoursesState extends EntityState<Course> {}
+export interface CoursesState extends EntityState<Course> {
+    allCoursesLoaded: boolean;
+}
 
 /* Objeto da store com diversos métodos úteis */
 export const adapter: EntityAdapter<Course> = createEntityAdapter<Course>();
 
-export const initialCoursesState: CoursesState = adapter.getInitialState();
+export const initialCoursesState: CoursesState = adapter.getInitialState({
+    allCoursesLoaded: false
+});
 
 export function coursesReducer(state = initialCoursesState, action: CourseActions): CoursesState {
     switch(action.type) {
@@ -18,7 +22,7 @@ export function coursesReducer(state = initialCoursesState, action: CourseAction
             return adapter.addOne(action.payload.course, state);
         
         case CourseActionTypes.AllCoursesLoaded:
-            return adapter.addAll(action.payload.courses, {...state, allCoursesLoaded:true});    
+            return adapter.addAll(action.payload.courses, {...state, allCoursesLoaded: true});    
         
         default: {
             return state;

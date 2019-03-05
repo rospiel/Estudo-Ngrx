@@ -5,6 +5,10 @@ import { CourseActionTypes, CourseRequested, CourseLoaded, AllCoursesRequested, 
 import { mergeMap } from "rxjs/internal/operators/mergeMap";
 import { CoursesService } from "./services/courses.service";
 import { map } from "rxjs/internal/operators/map";
+import { Store, select } from "@ngrx/store";
+import { AppState } from '../reducers';
+import { withLatestFrom, filter } from "rxjs/internal/operators";
+import { allCoursesLoaded } from "./course.selectors";
 
 @Injectable()
 export class CourseEffects {
@@ -22,11 +26,15 @@ export class CourseEffects {
     loadAllCourses$ = this.actions$
         .pipe(
             ofType<AllCoursesRequested>(CourseActionTypes.AllCoursesRequested),
-            mergeMap(action => this.coursesService.findAllCourses()),
+            withLatestFrom(this.store.pipe(select(allCoursesLoaded))), /* da última na store faz a seleção */
+            filter(([action, allCoursesLoaded]) => !allCoursesLoaded), /* do filtro faz a seleção, senão estiver carregado faz a busca */
+            mergeMap(() => this.coursesService.findAllCourses()),
             map(courses => new AllCoursesLoaded({courses}) )
         );
 
-    constructor(private actions$: Actions, private coursesService: CoursesService) {
+    constructor(private actions$: Actions, 
+                private coursesService: CoursesService,
+                private store: Store<AppState>) {
 
     }
 
