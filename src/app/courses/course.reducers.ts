@@ -22,3 +22,11 @@ export function coursesReducer(state = initialCoursesState, action: CourseAction
 
     }
 }
+
+/* Externalizando os métodos do adapter para não ter que implementalos no seletor */
+export const { 
+    selectAll,
+    selectEntities,
+    selectIds,
+    selectTotal
+} = adapter.getSelectors();
