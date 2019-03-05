@@ -10,7 +10,7 @@ import {AppState} from "../../reducers";
 import {select, Store} from "@ngrx/store";
 import {filter, first, tap} from "rxjs/operators";
 import { selectCourseById } from "../course.selectors";
-import { CourseRequested } from "../course.action";
+import { CourseRequested } from "../course.actions";
 
 
 

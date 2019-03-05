@@ -1,4 +1,4 @@
-import { Action } from "@ngrx/store/src/models";
+import { Action } from "@ngrx/store";
 import { Course } from "./model/course";
 
 export enum CourseActionTypes {
@@ -7,19 +7,21 @@ export enum CourseActionTypes {
 }
 
 export class CourseRequested implements Action {
+
     readonly type = CourseActionTypes.CourseRequested;
-
-    constructor(public payload: {courseId: number}) {
-
+  
+    constructor(public payload: { courseId: number }) {
+  
     }
-}
-
+  }
+  
+  
 export class CourseLoaded implements Action {
+  
     readonly type = CourseActionTypes.CourseLoaded;
-
-    constructor(public payload: {course: Course}) {
-
+  
+    constructor(public payload: { course: Course }) {
     }
-}
+  }
 
-export type CourseActions = CourseRequested | CourseLoaded;
+  export type CourseActions = CourseRequested | CourseLoaded;

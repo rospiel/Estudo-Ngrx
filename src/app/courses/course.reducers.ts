@@ -2,7 +2,7 @@ import { Course } from "./model/course";
 import { Lesson } from "./model/lesson";
 import { EntityState, EntityAdapter } from "@ngrx/entity/src/models";
 import { createEntityAdapter } from "@ngrx/entity";
-import { CourseActionTypes, CourseActions } from "./course.action";
+import { CourseActionTypes, CourseActions } from "./course.actions";
 
 /* Objeto a ser mantido na store */
 export interface CoursesState extends EntityState<Course> {}
