@@ -27,18 +27,17 @@ export class CourseResolver implements Resolve<Course> {
 
         const courseId = route.params['id'];
 
-        this.store
-            return this.store
-                .pipe(
-                    select(selectCourseById(courseId)), /* Buscando na store pelo id */
-                    tap(course => {
-                        if(!course) { /* Se não contiver na store faz a requisição */
-                            this.store.dispatch(new CourseRequested({courseId}));
-                        }
-                    }),
-                    filter(course => !!course), /* Se após a requisição não encontrar devolve vazio */
-                    first() /* Garantir que a transação será finalizada */
-                )
+        return this.store
+            .pipe(
+                select(selectCourseById(courseId)), /* Buscando na store pelo id */
+                tap(course => {
+                    if(!course) { /* Se não contiver na store faz a requisição */
+                        this.store.dispatch(new CourseRequested({courseId}));
+                    }
+                }),
+                filter(course => !!course), /* Se após a requisição não encontrar devolve vazio */
+                first() /* Garantir que a transação será finalizada */
+            )
     }
 
 }
