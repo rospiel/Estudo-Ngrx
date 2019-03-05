@@ -15,7 +15,11 @@ export const initialCoursesState: CoursesState = adapter.getInitialState();
 export function coursesReducer(state = initialCoursesState, action: CourseActions): CoursesState {
     switch(action.type) {
         case CourseActionTypes.CourseLoaded:
-            adapter.addOne(action.payload.course, state);
+            return adapter.addOne(action.payload.course, state);
+        
+        case CourseActionTypes.AllCoursesLoaded:
+            return adapter.addAll(action.payload.courses, {...state, allCoursesLoaded:true});    
+        
         default: {
             return state;
         }
